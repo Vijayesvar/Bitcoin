@@ -13,7 +13,7 @@ version = 1
 
 class Blockchain:
     def __init__(self):
-        self.initialize_blockchain()
+        pass
 
     def writeondisk(self, block):
         blockchaindb = BlockchainDB()
@@ -43,6 +43,7 @@ class Blockchain:
         bits = 'ffff001f'
         blockheader = Blockheader(version, prevblockhash, merkleroot, timestamp, bits)
         blockheader.mine()
+        print(f"Block {blockheight} mined successfully with nounce value of {blockheader.nonce}")
         block_data = [
             Block(
                 blockheight,
@@ -55,6 +56,9 @@ class Blockchain:
         self.writeondisk(block_data)
 
     def main(self):
+        lastblock = self.getlastblock()
+        if(lastblock is None):
+            self.genesis_block()  
         while True:
             prevblock = self.getlastblock()
             if prevblock is None:

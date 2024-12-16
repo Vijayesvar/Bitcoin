@@ -1,7 +1,8 @@
 import sys
 sys.path.append('/home/vijay/Desktop/bitcoin/blockchain/backend')
 from script import script
-from util.util import little_endian, bytes_needed, decode_base58, little_endian_to_int, encode_varint, hash256
+from util.util import little_endian, encode_varint, decode_base58, little_endian_to_int, hash256, bytes_needed
+
 
 ZERO_HASH = b"\0" * 32
 REWARD = 50

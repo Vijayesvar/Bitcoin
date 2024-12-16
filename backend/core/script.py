@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/vijay/Desktop/bitcoin/blockchain/backend')
+sys.path.append('/home/vijay/Desktop/Bitcoin/backend')  # Add backend to sys.path
 from util.util import little_endian, encode_varint
 
 class script:
