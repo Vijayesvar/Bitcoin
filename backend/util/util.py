@@ -3,8 +3,8 @@ import sys
 from Crypto.Hash import RIPEMD160
 from hashlib import sha256
 from math import log
-sys.path.append('/home/vijay/Desktop/bitcoin/blockchain/backend')
-from core.EllepticCurve.EllepticCurve import BASE58_ALPHABET
+sys.path.append('/home/vijay/Desktop/Bitcoin')
+from backend.core.EllepticCurve.EllepticCurve import BASE58_ALPHABET
 
 
 
