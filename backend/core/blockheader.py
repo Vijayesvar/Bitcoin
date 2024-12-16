@@ -15,8 +15,6 @@ class Blockheader:
 
     def mine(self):
         while(self.blockhash[0:4]) != '0000':
-            # print(type(self.version))
-            # print(type(self.prevblockhash))
             self.blockhash=hash256((str(self.version) + str(self.prevblockhash) + str(self.merkletree) + str(self.timestamp) + str(self.bits) + str(self.nonce)).encode()).hex()
             self.nonce +=1
             print(f"mining strated {self.nonce}", end='\r')
