@@ -6,14 +6,16 @@ from blockheader import Blockheader
 from blockheader import hash256
 from database.database import BlockchainDB
 from transaction import CoinbaseTx
+from multiprocessing import Process, Manager
+from Frontend.run import main
 import time
 
 zero_hash = '0' * 64  # Genesis block's previous hash
 version = 1
 
 class Blockchain:
-    def __init__(self):
-        pass
+    def __init__(self, utxos, ):
+        self.utxos = utxos
 
     def writeondisk(self, block):
         blockchaindb = BlockchainDB()
@@ -22,6 +24,10 @@ class Blockchain:
     def getlastblock(self):
         blockchaindb = BlockchainDB()
         return blockchaindb.lastBlock()
+    
+
+    def store_uxtos_in_cache(self,Transaction):
+            self.utxos[Transaction.Tx_Id] = Transaction
 
     def initialize_blockchain(self):
         # Check if a genesis block exists; if not, create it
@@ -43,6 +49,7 @@ class Blockchain:
         bits = 'ffff001f'
         blockheader = Blockheader(version, prevblockhash, merkleroot, timestamp, bits)
         blockheader.mine()
+        self.store_uxtos_in_cache(transaction)
         print(f"Block {blockheight} mined successfully with nounce value of {blockheader.nonce}")
         block_data = [
             Block(
@@ -70,6 +77,12 @@ class Blockchain:
             self.addblock(blockheight, prevblockhash)
 
 if __name__ == "__main__":
-    blockchain = Blockchain()
-    blockchain.main()
+    with Manager() as manager:
+        utxos = manager.dict() 
+        
+        webapp = Process(target=main, args=(utxos, ))
+        webapp.start()
+        
+        blockchain = Blockchain(utxos)
+        blockchain.main()
  

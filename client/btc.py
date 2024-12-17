@@ -1,8 +1,15 @@
-from ..backend.util.util import decode_base58
-from ..backend.core.script import script
-from ..backend.core.transaction import TxIn, TxOut, Tx
-from ..backend.core.database.database import AccountDB
-from ..backend.core.EllepticCurve.EllepticCurve import PrivateKey
+import sys
+import os
+
+# Add the absolute path of the project to sys.path dynamically
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
+from backend.util.util import decode_base58
+from backend.core.script import script
+from backend.core.transaction import TxIn, TxOut, Tx
+from backend.core.database.database import AccountDB
+from backend.core.EllepticCurve.EllepticCurve import PrivateKey
 import time
 
 
