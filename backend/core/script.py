@@ -1,13 +1,16 @@
 import sys
 sys.path.append('/home/vijay/Desktop/Bitcoin/backend')  # Add backend to sys.path
 from util.util import little_endian, encode_varint
-
+from EllepticCurve.op import OP_CODE_FUNCTION
 class script:
     def __init__(self, cmds=None):
         if cmds is None:
             self.cmds = []
         else:
             self.cmds = cmds
+
+    def __add__(self, other):
+        return script(self.cmds + other.cmds)
 
 
     def serialize(self):
@@ -44,6 +47,33 @@ class script:
         total = len(result)
         # encode_varint the total length of the result and prepend
         return encode_varint(total) + result
+    
+    def evaluate(self,z):
+        cmds = self.cmds[:]
+        stack = []
+
+        while len(cmds)>0:
+            cmd = cmds.pop(0)
+            
+            if type(cmd) == int:
+                operation = OP_CODE_FUNCTION[cmd]
+
+
+                if cmd == 172:
+                    if not operation(stack,z):
+                        print(f"Error in veryfing the signature")
+                        return False
+                    
+                if not operation(stack):
+                        print(f"Error ")
+                        return False
+
+            else:
+                stack.append(cmd)  
+
+        return True
+
+
             
     @classmethod
     def p2publickeyhashscript(cls, hash160):
