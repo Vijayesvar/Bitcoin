@@ -1,7 +1,8 @@
 import sys
 sys.path.append('/home/vijay/Desktop/Bitcoin/backend')  # Add backend to sys.path
 from util.util import little_endian, encode_varint
-from EllepticCurve.op import OP_CODE_FUNCTION
+from backend.core.EllepticCurve.op import OP_CODE_FUNCTION
+
 class script:
     def __init__(self, cmds=None):
         if cmds is None:

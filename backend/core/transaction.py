@@ -1,6 +1,7 @@
 import sys
+sys.path.append('/home/vijay/Desktop/Bitcoin/backend')  # Add backend to sys.path
 
-from script import script
+from core.script import script
 from backend.util.util import little_endian, encode_varint, decode_base58, little_endian_to_int, hash256, bytes_needed
 
 
